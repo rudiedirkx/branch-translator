@@ -39,10 +39,7 @@ class Source extends Model {
 			}, $branch);
 
 			$nextPaths = self::combinePaths(...$nextPaths);
-			// foreach ($nextPaths as $p => $path2) {
-			// 	$path[$p] = array_merge($path[$p], $path2);
-			// }
-			$path = array_merge($path, $nextPaths);
+			$path = array_merge($path, self::flip2d($nextPaths));
 		}
 
 		return $path;
@@ -66,11 +63,22 @@ class Source extends Model {
 		$combined = [];
 		for ($i = 0; $i < $max; $i++) {
 			foreach ($paths as $p => $x) {
-				$combined[$p][$i] = $paths[$i][$p] ?? null;
+				$combined[$p][$i] = $paths[$p][$i] ?? null;
 			}
 		}
 
 		return $combined;
+	}
+
+	static function flip2d(array $input) {
+		$output = [];
+		foreach ($input as $a => $row) {
+			foreach ($row as $b => $cell) {
+				$output[$b][$a] = $cell;
+			}
+		}
+
+		return $output;
 	}
 
 }
