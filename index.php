@@ -1,18 +1,37 @@
 <?php
 
+use rdx\branchtrans\Project;
 use rdx\branchtrans\Source;
 
 require 'inc.bootstrap.php';
 
-$sources = Source::all('1=1 ORDER BY id');
+$project = Project::find($_GET['project'] ?? PROJECT_ID);
+$sources = Source::all('project_id = ? ORDER BY id', [$project->id]);
+
+if (isset($_POST['project'], $_POST['opening'])) {
+	$id = Project::insert([
+		'name' => trim($_POST['project']),
+	]);
+	Source::insert([
+		'project_id' => $id,
+		'parent_source_id' => null,
+		'source' => trim($_POST['opening']),
+	]);
+
+	return do_redirect(null, ['project' => $id]);
+}
 
 if (isset($_POST['parent'], $_POST['followup']) && isset($sources[ $_POST['parent'] ])) {
 	Source::insert([
+		'project_id' => $project->id,
 		'parent_source_id' => $_POST['parent'],
-		'source' => $_POST['followup'],
+		'source' => trim($_POST['followup']),
 	]);
 
-	return do_redirect(null, ['start' => $_GET['start'] ?? '']);
+	return do_redirect(null, [
+		'project' => $project->id,
+		'start' => $_GET['start'] ?? null,
+	]);
 }
 
 $path = Source::pathSources($sources, $_GET['start'] ?? null);
@@ -33,14 +52,14 @@ include 'tpl.header.php';
 							<span><?= html($source->source) ?></span>
 							<button>+follow up</button>
 						</div>
-						<form method="post" hidden>
+						<form method="post" action hidden>
 							<input type="hidden" name="parent" value="<?= $source->id ?>" />
 							<input name="followup" />
 							<button>Save</button>
 						</form>
 					<? else: ?>
 						<? if (!$branched): ?>
-							<a href="?start=<?= $source->id ?>"><?= html($source->source) ?></a>
+							<a href="?project=<?= $project->id ?>&start=<?= $source->id ?>"><?= html($source->source) ?></a>
 						<? else: ?>
 							<? if (is_int($source)): ?>
 								(<?= $source ?> options)
@@ -56,12 +75,28 @@ include 'tpl.header.php';
 	<? endforeach ?>
 </table>
 
+<br>
+
+<details>
+	<summary>New project</summary>
+	<form method="post" action>
+		<p>Name: <input name="project" required /></p>
+		<p>Opening text: <input name="opening" required /></p>
+		<p><button>Create</button></p>
+	</form>
+</details>
+
 <script>
 function init() {
-	$$('.followuppable button').forEach(btn => btn.onclick = function(e) {
+	const btns = $$('.followuppable button');
+	btns.forEach(btn => btn.onclick = function(e) {
 		const el = this.closest('tr').querySelector('form');
 		el.hidden = !el.hidden;
+		if (!el.hidden) {
+			el.querySelector('input[name="followup"]').focus();
+		}
 	});
+	btns[btns.length-1].focus();
 }
 </script>
 

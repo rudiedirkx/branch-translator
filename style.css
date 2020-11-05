@@ -21,4 +21,6 @@ th, td {
 }
 .followuppable + form {
 	margin-top: 5px;
+	border-top: solid 3px #ccc;
+	padding-top: 5px;
 }
