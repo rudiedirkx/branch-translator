@@ -1,0 +1,19 @@
+{
+    "name": "rdx/branch-translator",
+    "type": "project",
+    "require": {
+        "rdx/db": "^1.19"
+    },
+    "autoload": {
+        "psr-4": {
+            "rdx\\branchtrans\\": "src/"
+        },
+        "files": ["inc.functions.php"]
+    },
+    "authors": [
+        {
+            "name": "Rudie Dirkx",
+            "email": "github@hotblocks.nl"
+        }
+    ]
+}

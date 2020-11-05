@@ -1,0 +1,24 @@
+body {
+	font-family: sans-serif;
+}
+
+table {
+	border-collapse: collapse;
+}
+th, td {
+	padding: 8px;
+	border: solid 1px #999;
+}
+
+.followuppable {
+	display: flex;
+}
+.followuppable > :first-child {
+	margin-right: auto;
+}
+.followuppable > :last-child {
+	margin-left: 10px;
+}
+.followuppable + form {
+	margin-top: 5px;
+}

@@ -1,0 +1,52 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "a1433975371e25a4f16b39349eff5c2b",
+    "packages": [
+        {
+            "name": "rdx/db",
+            "version": "1.19",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/rudiedirkx/db_generic.git",
+                "reference": "7d87f4f18828fbb4da8a5b434cbae55f58d3aeb2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/rudiedirkx/db_generic/zipball/7d87f4f18828fbb4da8a5b434cbae55f58d3aeb2",
+                "reference": "7d87f4f18828fbb4da8a5b434cbae55f58d3aeb2",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "./"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Rudie Dirkx",
+                    "email": "github@hotblocks.nl"
+                }
+            ],
+            "description": "Simple MySQL/SQLite wrapper",
+            "time": "2020-10-20T22:57:04+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": [],
+    "plugin-api-version": "1.1.0"
+}
